@@ -1,9 +1,8 @@
-网络操作
-----------------------
+# 第四天：网络操作
 
 不了解网络编程的程序员不是好前端，而NodeJS恰好提供了一扇了解网络编程的窗口。通过NodeJS，除了可以编写一些服务端程序来协助前端开发和测试外，还能够学习一些HTTP协议与Socket协议的相关知识，这些知识在优化前端性能和排查前端故障时说不定能派上用场。本章将介绍与之相关的NodeJS内置模块。
 
-### 开门红
+## 开门红
 
 NodeJS本来的用途是编写高性能Web服务器。我们首先在这里重复一下官方文档里的例子，使用NodeJS内置的`http`模块简单实现一个HTTP服务器。
 
@@ -18,7 +17,7 @@ NodeJS本来的用途是编写高性能Web服务器。我们首先在这里重�
 
 >	**豆知识：** 在Linux系统下，监听1024以下端口需要root权限。因此，如果想监听80或443端口的话，需要使用`sudo`命令启动程序。
 
-### API走马观花
+## API走马观花
 
 我们先大致看看NodeJS提供了哪些和网络操作有关的API。这里并不逐一介绍每个API的使用方法，官方文档已经做得很好了。
 
@@ -145,7 +144,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 	<!DOCTYPE html>
 	...
 
-#### HTTPS
+### HTTPS
 
 >	**官方文档： ** [http://nodejs.org/api/https.html](http://nodejs.org/api/https.html)
 
@@ -191,7 +190,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 
 但如果目标服务器使用的SSL证书是自制的，不是从颁发机构购买的，默认情况下`https`模块会拒绝连接，提示说有证书安全问题。在`options`里加入`rejectUnauthorized: false`字段可以禁用对证书有效性的检查，从而允许`https`模块请求开发环境下使用自制证书的HTTPS服务器。
 
-#### URL
+### URL
 
 >	**官方文档： ** [http://nodejs.org/api/url.html](http://nodejs.org/api/url.html)
 
@@ -266,7 +265,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 	http://www.example.com/baz
 	*/
 
-#### Query String
+### Query String
 
 >	**官方文档： ** [http://nodejs.org/api/querystring.html](http://nodejs.org/api/querystring.html)
 
@@ -282,7 +281,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 	'foo=bar&baz=qux&baz=quux&corge='
 	*/
 
-#### Zlib
+### Zlib
 
 >	**官方文档： ** [http://nodejs.org/api/zlib.html](http://nodejs.org/api/zlib.html)
 
@@ -346,7 +345,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 		});
 	}).end();
 
-#### Net
+### Net
 
 >	**官方文档： ** [http://nodejs.org/api/net.html](http://nodejs.org/api/net.html)
 
@@ -389,7 +388,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 		client.end();
 	});
 
-### 灵机一点
+## 灵机一点
 
 使用NodeJS操作网络，特别是操作HTTP请求和响应时会遇到一些惊喜，这里对一些常见问题做解答。
 
@@ -405,7 +404,7 @@ HTTP响应本质上也是一个数据流，同样由响应头（headers）和响
 
 	答： 发起客户端HTTP请求前需要先创建一个客户端。`http`模块提供了一个全局客户端`http.globalAgent`，可以让我们使用`.request`或`.get`方法时不用手动创建客户端。但是全局客户端默认只允许5个并发Socket连接，当某一个时刻HTTP客户端请求创建过多，超过这个数字时，就会发生`socket hang up`错误。解决方法也很简单，通过`http.globalAgent.maxSockets`属性把这个数字改大些即可。另外，`https`模块遇到这个问题时也一样通过`https.globalAgent.maxSockets`属性来处理。
 
-### 小结
+## 小结
 
 本章介绍了使用NodeJS操作网络时需要的API以及一些坑回避技巧，总结起来有以下几点：
 
